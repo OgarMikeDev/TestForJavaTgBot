@@ -133,8 +133,8 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        workWithButtons(update);
         sendInfoForStartTest(update);
+        workWithButtons(update);
     }
 
     public void workWithButtons(Update update) {
@@ -243,19 +243,20 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public void sendInfoForStartTest(Update update) {
+        if (update.hasMessage()) {
+            if (update.getMessage().getText().equals("/start_test")) {
+                countCorrectAnswers = 0;
+                SendMessage sendMessage = SendMessage.builder()
+                        .chatId(update.getMessage().getFrom().getId().toString())
+                        .text("Вас приветствует бот Михаила")
+                        .replyMarkup(keyboardForStartTest)
+                        .build();
 
-        if (update.getMessage().getText().equals("/start_test")) {
-            countCorrectAnswers = 0;
-            SendMessage sendMessage = SendMessage.builder()
-                    .chatId(update.getMessage().getFrom().getId().toString())
-                    .text("Вас приветствует бот Михаила")
-                    .replyMarkup(keyboardForStartTest)
-                    .build();
-
-            try {
-                execute(sendMessage);
-            } catch (Exception exception) {
-                exception.getMessage();
+                try {
+                    execute(sendMessage);
+                } catch (Exception exception) {
+                    exception.getMessage();
+                }
             }
         }
     }
