@@ -243,6 +243,7 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     public void sendInfoForStartTest(Update update) {
+
         if (update.getMessage().getText().equals("/start_test")) {
             countCorrectAnswers = 0;
             SendMessage sendMessage = SendMessage.builder()
